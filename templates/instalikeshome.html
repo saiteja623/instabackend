@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    body{
+        margin:0;
+    }
+#menu{
+    position:fixed;
+    margin:0;
+    display:flex;
+    background-color:white;
+    padding:4px;
+    height:40px;
+    width:100%;
+    font-size:1.5rem;
+    vertical-align: middle;
+    text-transform: capitalize; 
+    z-index:1;
+    border:none;
+    outline:none;
+    border-bottom:1px solid rgb(0,0,0,0.5);
+} 
+#loader{
+    position:relative;
+    display:flex;
+        width:100%;
+        height:50px;
+        background:white; 
+        margin-bottom:0;
+}
+#loader:after{
+    position: absolute;
+        content:" ";
+        top:100%;
+        left:0;
+        width:100%;
+        height:6px;
+        background:linear-gradient(to left ,#92fe9d 0, #00c9ff);
+        background-size: 200% 200%;
+        animation: pulse 1s  infinite;
+}
+@keyframes pulse{
+        0%{
+                background-position:0% 50%;
+        }
+        100%{
+                background-position:-200% 0%;
+        }
+}
+
+#home{
+    line-height:40px;
+    cursor:pointer;
+    margin-left:5%;
+}
+#profile{
+    display:flex;
+    line-height:40px;
+    margin-left:30px;
+    margin-right:10px;
+    cursor:pointer;
+}
+#post{
+    line-height:40px;
+    margin-left:20px;
+    margin-right:10px;
+    cursor:pointer;
+}
+#requests{
+    line-height:40px;
+    margin-left:13px;
+    cursor:pointer;
+}
+#logout{
+    line-height:40px;
+    margin-left:19px;
+    cursor:pointer;
+}
+#menu a{
+    text-decoration:none;
+    color:black;
+    transition:0.2s ease all;
+}
+#menu a:hover{
+    color:blue;
+}
+#search{
+    position:relative;
+    max-height:300px;
+    padding:4px 8px;
+    vertical-align:middle;
+    background:white;
+    font-size:1.02rem;
+    font-family:sans-serif;
+    width:400px;
+    margin:0px auto;
+}
+#cancel-search{
+    display:none;
+    position:absolute;
+    right:20px;
+    top:10px;
+    cursor:pointer;
+    font-size:1rem;
+    opacity:0.7;
+}
+#searchbox{
+    padding:4px 8px;
+    vertical-align:middle;
+    background:white;
+    font-size:1.02rem;
+    font-family:sans-serif;
+    width:400px;
+
+}
+#search-and-icon{
+    display:inline-flex;
+    margin:0px auto;
+    width:700px;
+}   
+#search input{
+    border:solid 1px rgb(0,0,0,0.4);
+    border-radius:4px;
+}
+#search #results{
+    max-height:170px;
+    border:solid 1px red;
+    display:none;
+    border:solid 1px rgb(0,0,0,0.5);
+    background:white;
+    width:102%;
+    overflow:hidden;
+    text-align:initial;
+}
+.parentclass{
+    display:inline-flex;
+width:90%;
+height:40px;
+margin:4px;
+vertical-align:middle;
+padding:4px 10px;
+font-family:sans-serif;
+text-transform:lowercase;
+border-bottom:solid 1px rgb(0,0,0,0.4);
+}
+.searchimages{
+    display:inline-block;
+    border-radius:50%;
+    margin-left:10px;
+}
+.search-username{
+    display:block;
+    vertical-align:middle;
+    margin-left:10px;
+    cursor:pointer;
+    height:30%;
+}
+.searchuser-name{
+    display:block;
+    opacity:0.8;
+    font-size:0.9rem;
+    margin-top:10px;
+    margin-left:10px;
+    font-family:lucid-sans;
+}
+.usernames{
+    display:inline-block;
+    width:130px;
+}
+@media only screen and (max-width:800px){
+    #home{
+        margin-left:4%;
+    }
+    #searchbox{
+        width:70%;
+    }
+    #search-and-icon{
+        width:94%;
+    }
+}
+</style>
+<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}">
+    {% block style %}
+
+
+    {% endblock %}
+    <script src="{% static 'js/instalikes.js' %}"></script>
+    <script>
+    var csrfcookie = function () {
+  var cookieValue = null,
+    name = "csrftoken";
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) == name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function searchuser(self){
+    document.getElementById("cancel-search").style.display="block";
+    user=self.value;
+    var res=document.getElementById("results");
+    res.innerHTML="";
+    if (user!=""){
+    res.style.display="block";
+var ob= new XMLHttpRequest();
+    var para = "user=" + user;
+        ob.open("POST", "/search_user", true);
+    ob.onreadystatechange = function () {
+      if (ob.readyState == 4 && ob.status==200) {
+          var res=JSON.parse(ob.responseText);
+          for(var i=0;i<res['users'].length;i++){
+              var parent=document.createElement("div");
+              var searchimage=document.createElement("IMG");
+              searchimage.setAttribute("src",res['images'][i]);
+              searchimage.setAttribute("class","searchimages");
+              searchimage.setAttribute("width",40);
+              searchimage.setAttribute("height",40);
+              parent.setAttribute("class","parentclass");
+              var username=document.createElement("div");
+              username.setAttribute("class","search-username");
+              username.setAttribute("onclick","some(this)");
+              username.textContent=res['users'][i]['username'];
+              document.getElementById("results").appendChild(parent);
+              var name=document.createElement("div");
+              name.innerText=res['names'][i];
+              name.setAttribute("class","searchuser-name");
+              parent.appendChild(searchimage);
+              var usernamediv=document.createElement("div");
+              usernamediv.setAttribute("class","usernames");
+              parent.appendChild(usernamediv);
+              usernamediv.appendChild(username);
+              usernamediv.appendChild(name);
+          }
+      }
+    };
+    ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ob.setRequestHeader("X-CSRFToken", csrfcookie());
+    ob.send(para);
+    }
+    else{
+        res.style.display="none";
+        document.getElementById("cancel-search").style.display="none";
+    }
+    };
+    function some(self){   
+        window.location="/"+"homePage"+"/"+self.textContent; 
+    }
+    function blurevent(){
+        document.getElementById("cancel-search").style.display="none";
+    }
+    function load(){
+        document.getElementById("loader").style.display="none";
+    }
+    
+    </script>
+	<title>homepage</title>
+</head>
+<body onload="load()">
+<div id="menu">
+<div id="search-and-icon">
+    <div id="search">
+    <input type="text" id="searchbox" onblur="blurevent()" onkeyup="searchuser(this)"  placeholder="search users">
+    <div id="cancel-search">&times</div>
+    <div id="results">
+    </div>
+    </div>
+    <div id="home">
+    <a href={% url 'homePage'%}><i class="fas fa-home"></i></a>
+    </div>
+	<div id="profile">
+	<a href={% url 'user_profile' %}><i class="far fa-user"></i></a>
+	</div>
+    <div id="post">
+    <a href={% url 'create_post' %}><i class="far fa-plus-square"></i></a>
+    </div>
+    <div id="requests">
+	<a href={% url 'friend_requests' %}><i class="far fa-bell"></i></a>
+	</div>
+	<div id="logout">
+	<a href={% url 'logout' %}><i class="fas fa-sign-out-alt"></i></a>
+	</div>
+</div>
+</div>
+<div id="loader">
+</div>
+{% block content %}
+
+
+{% endblock%}
+
+</body>
+{% block script%}
+
+
+{% endblock %}
+</html>

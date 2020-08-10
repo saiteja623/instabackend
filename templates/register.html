@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body >
+<form action="register" method="post">
+{% csrf_token %}
+<input type="text" name="first_name" placeholder="enter first name" ><i  id="icon" class="far fa-eye" onclick="hide(this)"></i><br>
+<input type="text" name="username" placeholder="enter your username" ><br>
+<input type="password" name="password" placeholder="enter your password" ><br>
+<input type="email" name="email" placeholder="somebody@gmail.com" ><br>
+<input type="number" name="age" placeholder="enter your age">
+<input type="submit" >
+</form>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{% extends 'instalikeshome.html' %}
+{% block style %}
+<style>
+body{
+    text-align:center;
+    overflow-x:hidden;
+}
+#container{
+    display:inline-block;
+    width:570px;
+    max-height:670px;
+    border:1px solid rgb(0,0,0,0.43);
+    border-radius:6px;
+    margin-top:60px;
+    text-align:initial;
+    padding:10px;
+}
+#alert{
+    display:none;
+    width:90%;
+    font-size:1.2rem;
+    color:red;
+    background:rgb(240, 128, 128,0.4);
+    text-align:center;
+    height:30px;
+    line-height:30px;
+    border:solid 1px red;
+    margin:4px auto;
+}
+#select-image{
+    margin:10px 4px;
+    padding:6px;    
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#enter-caption{
+    margin:10px 4px;
+}
+#caption-input{
+    margin:4px;
+    width:90%;
+    padding:4px 4px 4px 10px;
+
+}
+#image{
+    display:none;
+    width:100%;;
+    height:400px;
+}
+#imageselected{
+       width:97%;
+    height:400px;
+       object-fit:cover;
+}
+#post-heading{
+    text-align:center;
+    border-bottom:solid 1px rgb(0,0,0,0.4);
+    width:100%;
+    height:30px;
+    line-height:30px;
+    font-size:1.3rem;
+    font-family:sans-serif;
+}
+#upload-btn{
+    border:none;
+    outline:none;
+    background:darkblue;
+    color:white;
+    border-radius:4px;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding:4px 8px;
+    cursor:pointer;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div id="container">
+<div id="post-heading">
+    Upload Post
+</div>
+<div id="alert">
+Image must be selected to upload
+</div>
+<form id="myform" action="create_post" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+    <div id="select-image">
+    Select Image-
+    <input type="file" accept="image/*" id="file"  name="image" >
+    </div>
+    <div id="image">
+    <img src="Desktop/fb.png" id="imageselected">
+    </div>
+    <div id="enter-caption">
+    <span style="margin-left:8px;">Post Caption (optional):</span><br>
+    <input type="text" name="figcaption" id="caption-input">
+    </div>
+    <input type="submit" onclick="checkValidity()" value="Upload" id="upload-btn">
+    </form>
+</div>
+{% endblock %}
+{% block script%}
+<script>
+document.getElementById("file").onchange=viewImage;
+function viewImage(){
+    var v=document.getElementById("file");
+    var freader=new FileReader();
+    freader.readAsDataURL(v.files[0]);
+    freader.onloadend=function(event){
+        var img=document.getElementById("imageselected");
+        img.src=event.target.result;
+    }
+     document.getElementById("image").style.display="block";
+}
+function check(){
+   if(document.getElementById("file").value!=""){
+       viewImage();
+   }
+}
+document.getElementById("upload-btn").onclick= function() {
+    if (document.getElementById("file").value==""){
+        document.getElementById("alert").style.display="block";
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+function removeAlert(){
+                setTimeOut(function(){
+            document.getElementById("alert").style.display="none"},3000);
+}
+
+check();
+</script>
+{% endblock %}

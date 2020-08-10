@@ -1,0 +1,16 @@
+{% extends 'commonhome.html' %}
+{% block content %}
+<div class="container">
+<h2>{{question}}</h2>
+<form action="next" method="post">
+{% csrf_token %}
+<div class="options">
+<input type="radio" name="option" class="radio" value={{option1}}>{{option1}}</br>
+<input type="radio" name="option" class="radio" value={{option2}}>{{option2}}</br>
+<input type="radio" name="option" class="radio" value ={{option3}}>{{option3}}</br>
+</div>
+<button class="submit" onclick="submit()">Submit</button>
+</form>
+<button  onclick="submit()">Submit</button>
+</div>  
+{% endblock %}

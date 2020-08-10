@@ -1,0 +1,186 @@
+body{
+    background-image:url('/static/images/lightning.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        background-size:cover;
+    animation: image 20s infinite;
+    overflow:hidden;
+    width:100%;
+    height:100%;
+}
+@keyframes image{
+    20%{
+        background-image:url('/static/images/weather5.jpg');
+     -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        background-size:cover;
+    }
+    40%{
+        background-image:url('/static/images/weather8.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-size:cover;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        overflow: hidden;
+    }
+    60%{
+        background-image:url('/static/images/weather6.jpg');
+        background-size:cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        overflow:hidden;
+    }
+    80%{
+        background-image:url('/static/images/weather7.jpg');
+        background-size:cover;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        overflow:hidden;
+    }
+    100%{
+        background-image:url('/static/images/lightning.jpg');
+        background-size:cover;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+    }
+
+}
+.fail{
+
+    color:white;
+    font-weight:bold;
+    font-size:17px;
+    border:solid 1px black;
+    background-color:red;
+    width:230px;
+    margin-left:30px;
+    padding:6px 3px;
+    text-align: center;
+}
+.success{
+    color:white;
+    font-weight:bold;
+    font-size:17px;
+    border:solid 1px black;
+    background-color:green;
+    width:230px;
+    margin-left:30px;
+    padding:6px 3px;
+    text-align: center;
+}
+.container{
+    margin:100px auto;
+    width:300px;
+    border:solid 1px black;
+    padding:10px;
+    max-height:400px;
+    min-height:100px;
+    overflow-y:scroll;
+    scrollbar-width: none;
+    opacity:0.5;
+    background:transparent;
+    transition:ease 0.5s all;
+    background-color:rgb(154, 205, 50);
+}
+.container:hover{
+    opacity:1;
+}
+.container input:hover{
+    border:solid 1px blue;
+}
+.container input:visited{
+    border:solid 1px red;
+}
+.container input{
+    margin-left:20px;
+    padding:4px;
+    padding-left:6px;
+    margin-bottom:10px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.report{
+    text-transform: capitalize;
+    border:solid 1px black;
+    margin:10px auto;
+    padding-left:30px;
+    padding-top:0;
+    background-color:pink;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.submit{
+    background-color:rgb(22, 75, 155);
+    color:white;
+    padding-left:6px;
+}
+.heading #title{
+    color:white;
+    font-size:25px;
+    position:absolute;
+    top:30px;
+    left:200px;
+
+}
+@media only screen and (max-width:800px)
+{
+    .heading .title{
+        left:10px;
+    }
+}
+@media only screen and (max-width:450px)
+{
+    .heading .moon{
+        display: none;
+    }
+    .container{
+        opacity: 1;
+    }
+}
+@media only screen and (max-height:600px)
+{
+    .container{
+        margin:30px auto;
+        max-height:330px;
+        opacity:1;
+
+    }
+}
+.heading{
+    background-color:rgb(0, 0, 0);
+    color:white;
+    margin:0 auto;
+    border-radius:6px;
+    height:90px;
+    position:relative;
+    
+
+}
+.heading .moon{
+    height:80px;
+    width:200px;
+    position: absolute;
+    right:0;
+}
+.report .image{
+    float:right;
+}

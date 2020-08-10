@@ -1,0 +1,66 @@
+body{
+    background:rgba(0,0,0,0.9)
+}
+#heading{
+    background:gray;
+    padding:4px;
+    text-align:center;
+    color:white;
+    font-size:2.5rem;
+}
+#inf{
+    margin-top:10px;
+    text-align:center;
+    font-size:1.5rem;
+    color:white;
+}
+#game{
+    color:white;
+    position:relative;
+    margin:40px auto;
+    padding:4px;
+    width:300px;
+    height:360px;
+}
+#game #word{
+    font-size:1.7rem;
+    text-align:center;
+    margin:20px;
+    font-family:sans-serif;
+}
+#game #input{
+    font-weight: bold;
+margin:10px  30px;
+padding-left:8px;
+height:25px;
+width:80%;
+}
+#game #msg{
+    text-align:center;
+    font-size:1.3rem;
+}
+#game #time{
+    margin-left:10px;
+    font-size:1.5rem;
+}
+#game #score{
+    position:absolute;
+    bottom:2px;
+    right:10px;
+    font-size:1.5rem;
+}
+#aftermsg{
+    margin:20px;
+    position:relative;
+}
+#game #instructions{
+    background:gray;
+    padding:6px;
+    max-width:100%;
+    text-align: center;
+    border:1px solid white;
+}
+#instructions h7{
+    text-align:center;
+
+}

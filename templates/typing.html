@@ -1,0 +1,31 @@
+{% load  static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{%  static 'styles/typing.css' %}">
+        <title>Document</title>
+</head>
+<body>
+        <div id="heading">Word beater</div>
+        <div id="inf">Type the given word within <span style="color:green;">5</span> seconds</div>
+                <div id="game">
+        <div id="word"> </div>
+<input type="text" id="input"  onkeyup="checkWin()"  placeholder="start typing.."name="word" autofocus>
+<div id="msg"></div>
+<div id="aftermsg">
+<div id="time"> Time left: 5</div>
+<div id="score">score: 0</div>
+</div>
+<div id="instructions">
+        <h7>Instructions</h7>
+        <p>
+                The one with the highest score will be the winner<br>
+                If you fail you can continue with the given word but your score will restart</p>
+        </div>
+</div>
+        <script src="{% static 'js/typing.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+    function clicked(){
+        alert("hi");
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(xhr.readystate==4&& xhr.status==200){
+                document.getElementById("random").innerHTML=xhr.responseText;
+            }
+        };
+        xhr.open("GET","{% url 'number' %}",true);
+        xhr.send();
+    }
+	<title>Document</title>
+</head>
+<body bgcolor="cyan">
+random number:
+skkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+<div id="random"></div>
+<button onclick="clicked()"> clickit</button>
+</body>
+</html>

@@ -1,0 +1,54 @@
+h1{
+    background-color:rgb(197, 76, 123);
+    padding:4px;
+    padding-left:50px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.container{
+    background-color:rgb(228, 121, 21);
+    border:solid 1px black;
+    width:700px;
+    min-height:200px;
+    margin:20px auto;
+    position:relative;
+    padding:0px 10px 10px 10px;
+}
+.container h2{
+    background-color:rgb(230, 220, 85);
+    text-align: center;
+    padding:4px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+.options input{
+    margin-bottom:10px;
+    margin-right:6px;
+}
+.options{
+    font-weight:bold;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.submit{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    padding:6px 8px;
+    font-weight:bold;
+    background-color:green;
+}
+#question{
+    position:relative;
+    border:solid 1px black;
+    background-color:#a8a821;
+    font-size:17px;
+    padding-top:8px;
+    padding-left:8px;
+    font-weight:bold;
+    margin:2px;
+}
+#question .view{
+    position:absolute;
+    right:8px;
+    top:8px;
+    font-weight:bold;
+    background-color:rgba(12, 187, 231, 0.822);
+}

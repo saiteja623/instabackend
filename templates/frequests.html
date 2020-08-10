@@ -1,0 +1,126 @@
+{% extends 'instalikeshome.html' %}
+{% block style %}
+<style>
+body{
+    text-align:center;
+}
+#user_requests{
+    display:inline-block;
+    margin-top:70px;
+    padding:10px;
+    text-align:center;
+    width:400px;
+    max-height:400px;
+    background:white;
+    border:1px solid rgb(0,0,0,0.5);
+    box-shadow:3px 5px 4px gray;
+    box-shadow:-3px -5px 4px inlet gray;
+    border-radius:6px;
+    text-align:initial;
+}
+#user_requests .friends_profile{
+    width:70%;
+    margin:4px auto;
+    font-family:verdana;
+     border-bottom:1px solid rgb(0,0,0,0.5);
+    box-shadow:1px 2px 2px lightgray;
+}
+#username{
+    cursor:pointer;
+    margin-bottom:4px;
+}
+#username a{
+    text-decoration:none;
+    color:black;
+}
+#user_requests img {
+    dispaly:inline-block;
+border-radius:50%;
+}
+.inner_req{
+    display:inline-block;
+    margin:10px;
+}
+.inner_req .accept{
+    background:blue;
+    color:white;
+    padding:4px;
+    border:none;
+    outline:none;
+    font-weight:500;
+    fotnt-family:sans-serif;
+    letter-spacing:0.3px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.inner_req .decline{
+    background:red;
+    color:white;
+    padding:4px;
+    border:none;
+    outline:none;
+    font-weight:500;
+    fotnt-family:sans-serif;
+    letter-spacing:0.4px;
+    border-radius:6px;
+    cursor:pointer;
+}
+#no_requests{
+    display:inline-block;
+    margin-top:60px;
+    padding:10px 170px;
+    border:solid 1px black;
+    max-width:330px;
+    font-size:1.5rem;
+    text-align:middle; 
+    align-items:center;
+    justify-content:center;
+    text-align:initial;     
+}
+#user_requests .heading{
+        height:30px;
+    width:95%;
+    font-size:1.6rem;
+    padding:4px;
+    border-bottom:1px solid black;
+}
+#user_requests #inf{
+    overflow-y:scroll;
+    scrollbar-width: none;
+    height:90%;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+{% if frequests %}
+<div id="user_requests">
+<div class="heading">
+Friend requests
+</div>
+<div id="inf">
+{% for i in frequests%}
+    <div class='friends_profile'>
+    <img src="{{i.from_user.user.userprofile.image.url}}" width"50" height="50">
+    <div class="inner_req">
+    <div id="username" ><a href="{% url 'homepage_user' i.from_user.user %}">{{i.from_user.user}}</a> </div>
+    <input type="submit" class="accept" onclick="accept_user({{i.id}},this)" value="accept">
+    <input type="submit" class="decline" onclick="decline_user({{i.id}},this)" value="decline">   
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+{% else %}
+<div id="no_requests">
+You have no friend requests :(
+</div>
+{% endif %}
+{% endblock  %}
+
+{% block script %}
+{% load static %}
+<script src="{% static 'js/frequests.js' %}"></script>
+{% endblock %}

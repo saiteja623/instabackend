@@ -1,0 +1,123 @@
+body{
+    background:#f4acb7;
+    overflow:hidden;
+}
+#container{
+    margin:80px 300px;
+    position: relative;
+    border:none;
+    outline:none;
+    background:white;
+    padding:6px;
+    min-height:400px;
+    width:590px;
+    font-size:20px;
+    margin:80px 640px;
+    color:black;
+    box-shadow:5px 6px 5px gray;
+
+}
+#container #valid1{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:1px solid black;
+    padding-left:8px;
+    padding-top:3px;
+    font-size:17px;
+    width:80%;
+    background:transparent;
+    font-family: sans-serif;
+}
+#container button{
+    background:#00171f;
+    color:white;
+    cursor:pointer;
+    margin:8px;
+    padding:6px;
+}
+#container #delete{
+    border:none;
+    outline:none;
+    background:orange;
+    padding:4px;
+    margin:4px;
+    cursor:pointer;
+}
+#logout{
+    background:#2a9d8f;
+    color:white;
+     padding:4px;
+    margin:4px;
+    cursor:pointer;
+}
+#results{
+    font-weight:700;
+    width:100%;
+    height:210px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    font-family: sans-serif;
+}
+.heading{
+    color:white;
+    background-color:red;
+    overflow:hidden;
+    height:50px;
+}
+.heading .text{
+    font-size:30px;
+    text-transform: uppercase;
+    line-height: 50px;
+    text-align:center;
+    font-weight:bold;
+}
+.text:first-child{
+    animation:change 12s infinite;
+}
+@keyframes change{
+    0%{
+        margon-top:0;
+    }
+    23%{
+        margin-top:-50px;
+    }
+    49%{
+        margin-top:-100px;
+    }
+    73%{
+        margin-top:-150px;
+    }
+    99%{
+        margin-top:-200px;
+    }
+    100%{
+        margin-top:-201px;
+    }
+
+}
+ul li{
+    text-transform: capitalize;
+}
+#container h2{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+@media only screen and (max-width:600px){
+    .image{
+        display:none;
+    }
+    #container{
+        margin:30px auto;
+        width:96%;
+    }
+    button{
+        margin:0;
+    }
+}
+@media only screen and (max-width:900px){
+    #container{
+        margin:30px auto;
+    }
+}

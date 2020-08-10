@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{% static 'styles/googlesearch.css' %}">
+        <title>wordguess</title>
+</head>
+<body>
+        <div id="google">
+                <span style="color:white;">G</span><span style="color:white;">o</span><span style="color:white;">o</span><span style="color:white;">g</span><span style="color:white;">l</span><span style="color:white;">e</span>
+        </div>
+        <div id="searchbox">
+        <input type="text"  name="search"  placeholder="search Google.. " onkeyup="search(this)" id="search"> 
+        <a id="clear">&times</a>
+        <div id="res">
+        </div>
+        </div>
+</body>
+<script src="{% static 'js/googlesearch.js' %}"></script>
+</html>

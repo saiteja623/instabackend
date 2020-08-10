@@ -1,0 +1,22 @@
+{% extends 'commonhome.html'%}
+{% block content %}
+<div class="container">
+<h3> POLL RESULTS </h3>
+{% for i in ob %}
+<div id="question">
+{{i.question}}
+<form action="view{{i.id}}">
+{% csrf_token %}
+<input type="submit" value="View" class="view">
+</form>
+<br>
+</div>
+{% endfor%}
+<br>
+<br>
+<form action="home">
+{% csrf_token %}
+<input type="submit" value="GO To Home" class="submit">
+</form>
+</div>
+{% endblock %}

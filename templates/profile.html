@@ -1,0 +1,476 @@
+{% extends 'instalikeshome.html' %}
+
+{% block style %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'styles/userprofile.css'%}">
+{% endblock %}
+{% block content %}
+  {% if message%}
+    <div id="message">{{message}}</div>
+  {% endif %}
+  <div id="total">
+<div id="container">
+    <div id="image">
+        <img src="{{user.userprofile.image.url}}" width="90" height="90">
+    </div>
+    <div id="usersinfo">
+        <span style="font-size:1.7rem;font-weight:500;margin:0px;">{{user.userprofile.user}}</span><br>
+    <div id="user-and-post">
+    <div id="numofusers">
+        <span style="font-weight:bold;">{{num_of_friends}}</span> Friends
+    </div>
+    <div id="numofposts">
+        <span style="font-weight:bold;">{{num_of_posts}}</span> Posts
+        </div>
+    </div>
+    </div>
+<input type="submit" value="Edit Profile" id="select-update">
+<div id="update">
+<form id="myform" action="update_user" method="POST" enctype="multipart/form-data"> 
+{% csrf_token %}
+    <div class="updateinfo">
+    <label>Username:</label><br>
+    <input type="text"  id="username_after" name="username_changed" value={{user.userprofile.user}}><br>
+    </div>
+    <div class="updateinfo">
+    <label>Name:</label><br>
+    <input type="text" id="nickname" name="othername" value={{user.userprofile.name}}><br>
+    </div>
+    <div class="updateinfo">
+    <label>Email:</label><br>
+    <input type="text" id="gmali" name="email" value={{user.email}}><br>
+    </div>
+    <div class="updateinfo">
+    <label>image*</label><br>
+    <span style="font-size:1.1rem">selected image : {{user.userprofile.image.name}}</span><br>
+    <input type="file" accept="image/*" name="file_changed"><br>
+    </div>
+    <input id="update-btn" type="submit" onclick=" return checkBlank()"value="Update">
+    <input id="cancel-btn" onclick="return cancel()" type="submit" value="Cancel">
+    </form>
+</div>
+<div id="user-othername">
+{{user.userprofile.name}}
+</div>
+<div id="desc">
+{{user.userprofile.desc|linebreaks}}</div>
+<input id="select-bio-que-btn" type="submit" value="Update Bio">
+<div id="update-bio-select">
+<div class="updateinfo">
+    <label>Bio:</label><br>
+    <textarea name="bio" placeholder="Enter your new bio here"></textarea>
+    </div>
+    <input id="update-bio-btn" type="submit" value="Update">
+<input id="cancel-bio-btn" onclick="return cancel()" type="submit" value="Cancel">
+</div>
+</div>
+<!--
+{% if  allfriends  %}
+<div id="usersfriends">
+	<div class="heading">Your friends</div>
+	<div id="inf">
+	{% for i in allfriends %}
+	<div class="sugges_profile">
+	<img src="{{i.user.userprofile.image.url}}" width="50" height="50">
+	<div class="innerdiv">
+	<a href="{% url 'homepage_user' i.user %}">{{i.user}}</a>
+	<div>
+	<input type="submit" onclick="remove_add_frnd({{i.user.customuser.id}},this)" value="Friends">
+	</div>	
+	</div>
+	</div>
+	{% endfor %}
+</div>
+</div>
+{% else %}
+<div id="no_friends">
+You have no friends :( Send friend requests to make friends
+</div>
+{% endif%}-->
+<div id="unfriend-alert">
+	<div id="inf">
+		<div id="alert-heading">
+		</div>	
+		<input type="submit" value="unfriend"  id="unfriend-user-btn">
+		<input type="submit" value="cancel"   id="cancel-unfriend-btn">	
+	</div>
+</div>
+</div>
+<div id="user-post-images" >
+{% for i  in posts %}
+<div class="user-image" onclick="goto_post({{i.id}},{{i.likes}},this)">
+<img  src="{{i.image.url}}">
+    <div class="likes-hover">
+    </div>
+     <div class="show-likes">
+     <i class="fa fa-heart"></i> {{i.likes}}        <i class="fas fa-comment"></i> {{i.commentsby_set.all.count}}
+      </div>
+</div>
+{% endfor %}
+</div>
+
+
+
+<div id="show-post">
+  <div id="close-post">
+     +
+  </div>
+  <div id="post-container">
+    <div id="post-container-loader">
+    </div>
+    <div id="post-container-reveal">
+      <div id="user-post-image">
+          <img src="" id="absolute-image">
+      </div>
+      <div id="user-post-info">
+        <div id="user-name-profile">
+          <div id="user-post-profile-image">
+            <img src="" id="user-profile-image">
+          </div>
+          <div id="users-username-info">
+          </div>
+        </div>
+        <div id="user-post-comments">
+        </div>
+        <div id="post-bottom">
+        </div>
+        <div id="user-comment-input">
+            <input type="text" onkeyup="checkComment(this)" id="comment-input" placeholder="Add a comment...">
+            <input type="submit"  disabled="disabled" id="comment-btn" value="Post" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="randomuser-friends">
+	<div id="content">
+		<div id="heading">
+			<p> Your Friends</p>
+			<div id="close"> 
+				+
+			</div>
+		</div>
+		<div id="randomfriends-list">
+		</div>	
+	</div>
+</div>
+{% endblock%}
+
+{% block script%}
+<script>
+function checkBlank(){
+  var l=document.getElementById("username_after");
+  var m=document.getElementById("nickname");
+  var p=document.getElementById("gmail");
+  if(l.value==""|| m.value==""||p.value==""){
+    alert("fields cannot be empty");
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+var m="{{user.userprofile.desc|linebreaks}}"
+function cancel(){
+  document.getElementById("user-othername").style.display="block";
+    document.getElementById("update").style.display="none";
+    document.getElementById("desc").style.display="block";
+    document.getElementById("select-bio-que-btn").style.display="inline-block";
+    return false;
+}
+
+document.getElementById("select-update").onclick=function(){
+  document.getElementById("user-othername").style.display="none";
+    document.getElementById("update").style.display="block";
+    document.getElementById("desc").style.display="none";
+    document.getElementById("select-bio-que-btn").style.display="none";
+}
+document.querySelector("textarea").onkeypress=function(event){
+  if(event.keyCode==13){
+    event.preventDefault();
+    this.value=this.value+"\n";
+  }
+};
+
+var csrfcookie = function () {
+  var cookieValue = null,
+    name = "csrftoken";
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) == name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+var otherob;
+var id_obj;
+function remove_add_frnd(id,self){
+    if (self.value=="Friends"){
+      otherob=self;
+      id_obj=id;
+      var username = self.parentNode.parentNode.childNodes[1].childNodes[0].textContent;
+    var x = document.getElementById("alert-heading");
+    x.textContent = "Unfriend  " + username + "?";
+    document.getElementById("unfriend-alert").style.display = "flex";
+    }
+    else if(self=="confirm-unfriend"){
+      document.getElementById("unfriend-alert").style.display = "none";
+       otherob.parentNode.parentNode.parentNode.style.display="none";
+          var obj = new XMLHttpRequest();
+    var para = "id=" + id_obj;
+    obj.open("POST", "remove_friend", true);
+    obj.onreadystatechange = function () {
+      if (obj.readyState == 4 && obj.status==200) {
+
+      }
+    }
+    obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    obj.setRequestHeader("X-CSRFToken", csrfcookie());
+    obj.send(para);
+}
+};
+document.getElementById("unfriend-user-btn").addEventListener("click", function () {
+  remove_add_frnd(4, "confirm-unfriend");
+});
+
+
+document.getElementById("cancel-unfriend-btn").addEventListener('click', function (e) {
+  document.getElementById("unfriend-alert").style.display = "none";
+});
+
+document.getElementById("select-bio-que-btn").onclick=function(){
+  document.getElementById("select-bio-que-btn").style.display="none";
+  document.getElementById("update-bio-select").style.display="block";
+}
+document.getElementById("update-bio-btn").onclick=function(e){
+    var  desc=document.querySelector("textarea").value;
+    var obj = new XMLHttpRequest();
+    var para = "bio=" + desc;
+    obj.open("POST", "update_userdesc_ajax", true);
+    obj.onreadystatechange = function () {
+      if (obj.readyState == 4 && obj.status == 200) {
+        console.log("done");
+        location.reload();
+
+      }
+    };
+    obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    obj.setRequestHeader("X-CSRFToken", csrfcookie());
+    obj.send(para);
+}
+document.getElementById("cancel-bio-btn").onclick=function(){
+  document.getElementById("update-bio-select").style.display="none";
+  document.getElementById("select-bio-que-btn").style.display='inline-block';
+  return false;
+}
+document.getElementById("numofusers").onclick=function(){
+    var res=document.getElementById("randomfriends-list");
+    res.innerHTML="";
+    document.getElementById("randomuser-friends").style.display="flex";
+    {% for i in allfriends %}
+            var parent=document.createElement("div");
+              var randomuserimage=document.createElement("IMG");
+              randomuserimage.setAttribute("src","{{i.user.userprofile.image.url}}");
+              randomuserimage.setAttribute("class","randomsearchimages");
+              randomuserimage.setAttribute("width",40);
+              randomuserimage.setAttribute("height",40);
+              parent.setAttribute("class","parentclass");
+              var randomusername=document.createElement("div");
+              randomusername.setAttribute("class","randomsearch-username");
+              randomusername.setAttribute("onclick","some(this)");
+              randomusername.textContent="{{i.user}}";
+              document.getElementById("randomfriends-list").appendChild(parent);
+              var name=document.createElement("div");
+              name.innerText="{{i.user.userprofile.name}}";
+              name.setAttribute("class","randomsearchuser-name");
+              parent.appendChild(randomuserimage);
+              var randomuserdiv=document.createElement("div");
+              randomuserdiv.setAttribute("class","randomusernames");
+              parent.appendChild(randomuserdiv);
+              randomuserdiv.appendChild(randomusername);
+              randomuserdiv.appendChild(name);
+    {% endfor %}
+}
+document.getElementById("close").onclick=function(){
+    document.getElementById("randomuser-friends").style.display="none";
+
+}
+function some(self){
+        window.location="/"+"homePage"+"/"+self.textContent; 
+}
+var y;
+var piclikes;
+function goto_post(id,likes,self){
+  document.querySelector("body").style.overflow="hidden";
+  y=id;
+  piclikes=likes;
+  document.getElementById("show-post").style.display="block";
+  document.getElementById("post-container-loader").style.display="none";
+  document.getElementById("absolute-image").src=self.childNodes[1].src;
+  var username="{{user.username}}";
+//users userprofile image and username at right top 
+  document.querySelector("#user-post-profile-image img").src="{{user.userprofile.image.url}}";
+  var url = "homePage/" + username;
+  document.getElementById("users-username-info").innerHTML = '<span style="font-weight:600;">' + '<a href=' + url + '>' + username + ' </a > ' + '</span > ';
+ 
+  
+//get comments on clicking the post  image
+  document.getElementById("user-post-comments").innerHTML = " ";
+  var ob = new XMLHttpRequest();
+  var params = 'id=' + id + "&action=get";
+  ob.open("POST", "get_save_comment", true);
+  ob.onreadystatechange = function () {
+    if (ob.readyState == 4 && ob.status == 200) {
+      var res = JSON.parse(ob.responseText);
+      for (var i = 0; i < res['l'].length; i++) {
+        var randomuserimage = document.createElement("IMG");
+        randomuserimage.setAttribute("src", res['images'][i]);
+        randomuserimage.setAttribute("class", "commentuserimage");
+        randomuserimage.setAttribute("width", 30);
+        randomuserimage.setAttribute("height", 30);
+        var parent = document.createElement("div");
+        parent.setAttribute("class", "parentcommentclass");
+        document.getElementById("user-post-comments").appendChild(parent);
+        var comment = document.createElement("div");
+        var url = "homePage/" + res['l'][i]['name'];
+        comment.innerHTML = '<span style="font-weight:600;">' + '<a href=' + url + '>' + res['l'][i]['name'] + ' </a > ' + '</span > ' + "  " + res['l'][i]['comment'];
+        comment.setAttribute("class", "usercomment");
+        parent.appendChild(randomuserimage);
+        parent.appendChild(comment);
+        if(res['liked']=="yes"){
+          document.getElementById("post-bottom").innerHTML='<i onclick="inc_decr('+id+',this)" class="fas fa-heart"></i>'+"<br>"+'Liked by '+'<a href="javascript:getLikes('+id+')" >'+ likes+" others"+'</a>';
+        }else{
+          document.getElementById("post-bottom").innerHTML='<i onclick="inc_decr('+id+',this)" class="far fa-heart"></i>'+"<br>"+'Liked by '+'<a href="javascript:getLikes('+id+')" >'+ likes+" others"+'</a>';
+        }
+      }
+    }
+  }
+  ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ob.setRequestHeader("X-CSRFToken", csrfcookie());
+  ob.send(params);
+};
+//goto_user function ends here
+
+
+document.getElementById("close-post").onclick=function(){
+  document.getElementById("show-post").style.display="none";
+  document.querySelector("body").style.overflow="scroll";
+};
+
+
+//post comment when user hits post button
+  document.getElementById("comment-btn").onclick=function(){
+    var commentvalue=this.parentNode.childNodes[1].value;
+    this.parentNode.childNodes[1].value = "";
+    var m=this.parentNode.parentNode.childNodes[3];
+  var ob = new XMLHttpRequest();
+  var params = 'id=' + y+ "&action=save&comment=" + commentvalue;
+  ob.open("POST", "get_save_comment", true);
+  ob.onreadystatechange = function () {
+    if (ob.readyState == 4 && ob.status == 200) {
+  var randomuserimage = document.createElement("IMG");
+  randomuserimage.setAttribute("src", "{{user.userprofile.image.url}}");
+        randomuserimage.setAttribute("class", "commentuserimage");
+        randomuserimage.setAttribute("width", 30);
+        randomuserimage.setAttribute("height", 30);
+        var parent = document.createElement("div");
+        parent.setAttribute("class", "parentcommentclass");
+        document.getElementById("user-post-comments").appendChild(parent);
+        var comment = document.createElement("div");
+        var url = "homePage/" + "{{user.username}}";
+        comment.innerHTML = '<span style="font-weight:600;">' + '<a href=' + url + '>' + "{{user.username}}" + ' </a > ' + '</span > ' + "  " + commentvalue;
+        comment.setAttribute("class", "usercomment");
+        parent.appendChild(randomuserimage);
+        parent.appendChild(comment);
+    }
+  }
+  ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ob.setRequestHeader("X-CSRFToken", csrfcookie());
+  ob.send(params);
+  }
+
+  //when user click the heart(like) icon to increase or decrease like
+  function inc_decr(id,self){
+    if (self.className == "fas fa-heart") {
+    decreaseLikes(id,self);
+  }
+  else if (self.className == "far fa-heart") {
+    increaseLikes(id,self);
+  }
+}
+function increaseLikes(id,self) {
+  piclikes=piclikes+1;
+  xhr = new XMLHttpRequest();
+  var params = 'y=' + id;
+  xhr.open("POST", "increaseLikes", true);
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      document.getElementById("post-bottom").innerHTML='<i onclick="inc_decr('+id+',this)" class="fas fa-heart"></i>'+"<br>"+'Liked by '+'<a href="javascript:getLikes('+id+')" >'+ piclikes+" others"+'</a>';
+  }
+  };
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.setRequestHeader("X-CSRFToken", csrfcookie());
+  xhr.send(params);
+}
+function decreaseLikes(id,self) {
+  piclikes=piclikes-1;
+  xhr = new XMLHttpRequest();
+  var params = 'y=' + id;
+  xhr.open("POST", "decreaseLikes", true);
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200) {
+document.getElementById("post-bottom").innerHTML='<i onclick="inc_decr('+id+',this)" class="far fa-heart"></i>'+"<br>"+'Liked by '+'<a href="javascript:getLikes('+id+')" >'+ piclikes+" others"+'</a>';
+  }
+  };
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.setRequestHeader("X-CSRFToken", csrfcookie());
+  xhr.send(params);
+
+}
+function getLikes(id){
+  var ob = new XMLHttpRequest();
+  var params = 'y=' + id;
+  ob.open("POST", "ajaxgetLikes", true);
+  ob.onreadystatechange = function () {
+    if (ob.readyState == 4 && ob.status == 200) {
+      var res = JSON.parse(ob.responseText);
+    var q=document.getElementById("randomfriends-list");
+    q.innerHTML="";
+    document.getElementById("randomuser-friends").style.display="flex";
+      for (var i = 0; i < res['usersLiked'].length; i++) {
+        var parent = document.createElement("div");
+        var randomuserimage = document.createElement("IMG");
+        randomuserimage.setAttribute("src", res['images'][i]);
+        randomuserimage.setAttribute("class", "randomsearchimages");
+        randomuserimage.setAttribute("width", 40);
+        randomuserimage.setAttribute("height", 40);
+        parent.setAttribute("class", "parentclass");
+        var randomusername = document.createElement("div");
+        randomusername.setAttribute("class", "randomsearch-username");
+        randomusername.setAttribute("onclick", "some(this)");
+        randomusername.textContent = res['usersLiked'][i]['name'];
+        document.getElementById("randomfriends-list").appendChild(parent);
+        var name = document.createElement("div");
+        name.innerText = res['names'][i];
+        name.setAttribute("class", "randomsearchuser-name");
+        parent.appendChild(randomuserimage);
+        var randomuserdiv = document.createElement("div");
+        randomuserdiv.setAttribute("class", "randomusernames");
+        parent.appendChild(randomuserdiv);
+        randomuserdiv.appendChild(randomusername);
+        randomuserdiv.appendChild(name);
+      }
+    }
+  };
+  ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ob.setRequestHeader("X-CSRFToken", csrfcookie());
+  ob.send(params);
+}
+</script>
+{% endblock %}

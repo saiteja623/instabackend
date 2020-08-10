@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'styles/chatapp.css' %}">
+	<title>chatapp</title>
+</head>
+<body>
+<div id="container">
+<div id="messages"></div>   
+<div contenteditable id="message">
+</div>
+<input type="submit" id="submit" value="send">
+</div>
+<script>
+var roomname='{{room_name}}'; 
+var personName='{{person_name}}';
+var socket=new WebSocket(
+    'ws://'+window.location.host+'/ws/chat/'+roomname+'/'+personName+'/'
+)
+socket.onerror=function(e){
+    console.log(e);
+}
+socket.onmessage=function(e){
+    console.log(e);
+    var data=JSON.parse(e.data);
+    message=data['message'];
+    person=data['person'];
+    action=data['action'];
+    if(person==personName){
+        var parentdiv=document.createElement("div");
+        document.getElementById('messages').appendChild(parentdiv);
+        parentdiv.setAttribute("class","parent");
+        var div=document.createElement("div");
+        parentdiv.appendChild(div);
+        if(action=="join" || action=="disconnected"){
+            div.setAttribute("class","mine_middle");
+            div.textContent="you "+message;    
+        }
+        else{
+            div.setAttribute("class","mine_sideways");
+            div.textContent=message;
+        }
+        
+    }
+    else{
+        var parentdiv=document.createElement("div");
+        var div=document.createElement("div");
+        document.getElementById('messages').appendChild(parentdiv);
+        parentdiv.setAttribute("class","parent");
+        parentdiv.appendChild(div);
+        if(action=="join" || action=="disconnected"){
+            div.setAttribute("class","others_middle");
+            div.textContent=person+message
+        }
+        else{
+            div.setAttribute("class","others_sideways");
+        div.innerHTML='<h7 style="color:red;">'+person+'</h7>' +'<br>'+message;
+        }
+    }
+    var items=document.querySelectorAll(".parent");
+    console.log(items);
+    var last=items[items.length-1];
+    last.scrollIntoView();
+}
+socket.onclose=function(e){
+    console.log(e);
+}
+document.getElementById("message").addEventListener('keydown',function(e){
+    if(e.keyCode==13){
+        document.getElementById("submit").click();
+    }
+})
+document.getElementById('submit').onclick=function(e){
+    var message=document.getElementById('message').textContent;
+    if(message==""){
+        alert("no message!");
+    }
+    else{
+    socket.send(JSON.stringify({'message':message}));
+    document.getElementById('message').innerHTML="";
+    }
+}
+</script>
+</body> 
+</html>

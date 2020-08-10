@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/todo1.css' %}">
+	<script src="{% static 'js/login.js' %}"></script>
+</head>
+<body>
+{% for i in messages %}
+<div class="heading">
+	<div class="text">hello</div> 
+	<div class="text">{{i}}</div>
+	<div class="text">welcome</div>
+	<div class="text">to the</div>
+	<div class="text">todo website</div>
+</div>
+{% endfor %}
+<div id="container">
+<h2>Enter the Work U want to do </h2>
+<form action="addtodo" method="post" id="form_submit">
+ {% csrf_token %}
+    <input type="text" id="valid1" placeholder="Enter your work" size="50" name="cont">
+    <button> add</button>
+</form>
+<div id="results">
+{% for i in list %}
+<ul>
+<li>{{i.cont}}
+	<form action="delete{{i.id}}" method="post"style="display:inline;">{% csrf_token %}
+	<input type="submit" value="delete" id="delete">
+	</form>
+</li>
+</ul>
+{% endfor %}
+</div>
+<form action="logout">
+{% csrf_token %}
+<input type="submit" value="logout"  id="logout" onclick=" return logout()">
+</form>
+</div>
+</body>
+</html>

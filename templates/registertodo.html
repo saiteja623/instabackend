@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
+	<script src="{% static 'js/register.js'%}"></script>
+</head>
+<body style="background-image:url({% static 'images/pic2.jpeg' %})">
+	<div class="heading" >
+		REGISTER INORDER TO LOGIN
+	</div>
+<div class="container">
+{% for i in messages%}
+	<div class="messages"> {{i}} </div>
+	{% endfor %}
+
+<form action="register" method="post">
+ {% csrf_token %}
+	<div class="form">
+<div class="inf">
+<label for="name">
+username:</label>
+<input type="text" name="username" id="name" placeholder="John Wick" ><br>
+</div>
+<div class="inf">
+<label for="password">
+ password:</label>
+<input type="password" name="password" id="password1" placeholder="12345678" ><i  id="icon" class="far fa-eye" onclick="hide1(this)"></i>
+</div>
+<div class="inf">
+<label for="password1">
+password:</label>
+<input type="password" name="password1" id="password2" placeholder="12345678"><i  id="icon" class="far fa-eye" onclick="hide2(this)"></i>
+</div>
+<div class="inf">
+<label for="email">
+Email:</label>
+<input type="email" name="email" id="email" placeholder="someone@gmail.com"><br>
+</div>
+<input type="submit"  onclick="return check()" class="submit"><br>
+</div>
+</form>
+</div>
+</body>
+</html>

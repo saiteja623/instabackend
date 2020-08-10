@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+<form action="send" method='post' enctype="multipart/form-data">
+{% csrf_token %}
+   <!-- Enter recipients email:
+    <input type="email" name="gmail" placeholder="enter email here" ><br>
+    Enter Subject:
+    <input type="text" name="subject" placeholder="sunject"><br>
+    Enter your message:
+    <input type="text" name="message" placeholder="enter your description here"><br>
+    -->
+    <input type="file" name="file">
+    <input type="submit">
+</form>
+</body>
+</html>

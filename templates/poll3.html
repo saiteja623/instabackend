@@ -1,0 +1,15 @@
+{% extends 'commonhome.html'%}
+{% block content %}
+<div class="container">
+<form action="back">
+{% csrf_token %}
+<h2>{{i.question}}</h2>
+{{i.option1}} --- {{i.option1_value}}<br>
+<HR>
+{{i.option2}} --- {{i.option2_value}}<br>
+<HR>
+{{i.option3}} --- {{i.option3_value}}<br>
+<input type="submit" value="Goback" class="submit">
+</form>
+</div>
+{% endblock %}

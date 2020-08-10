@@ -1,0 +1,259 @@
+body{
+    background-color:rgb(0, 0, 0,0.8);
+    overflow:hidden;
+    position:relative;
+    overflow-y:hidden;
+}
+/* this belongs to chathome2 */
+#header{
+    height:70px;
+    padding-left:10%;
+    background:lightcyan;
+    font-size:3rem;
+    line-height:70px;
+}
+#content{
+    max-width:500px;
+    max-height:70%;
+    overflow-y:hidden;
+    background:white;
+    border:2px solid white;
+    padding:13px;
+    margin:100px auto;
+    border:none;
+    outline: none;
+    box-shadow: 5px 10px 5px rgb(0, 0, 0,0.8);
+    font-family:sans-serif;
+    line-height:20px;
+    letter-spacing:0.7px;
+    border-radius:6px;
+
+}
+#person_name{
+    padding:6px;
+    padding-left: 12px;
+    font-size:90%;
+    letter-spacing:1px;
+    margin-left:20%;
+}
+#content h3{
+    text-align:center;
+}
+#startchat{
+    background-color: green;
+    font-size:800;
+    padding:6px;
+    border:none;
+    outline:none;
+    align-items:center;
+    cursor:pointer;
+}
+/* this belongs to chatroom2 */
+#container{
+    position:relative;
+    margin:40px auto;
+    width:35%;
+    height:500px;
+    background-color:white;
+    padding:6px;
+    border:none;
+    outline: none;
+    box-shadow:5px 10px lightgray;
+    border-radius:6px;
+}
+#messages{
+    width:100%;
+    margin:0 auto;
+    height:87%;
+    overflow-x: hidden;
+    overflow-y:scroll;
+    scrollbar-width: none;
+}
+#send_pic{
+    position: absolute;
+    padding:6px;
+    left:4px;
+    bottom:20px;
+    background:lightcoral;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-weight: 800;
+}
+.options{
+display:none;
+}
+.show_options{
+    display:inline-block;
+    position:rellative;
+    margin-left:30px;
+    margin-top:25px;
+    background-color:lightgreen;
+}
+#new_stranger,#pic,#go_home{
+    padding:4px 6px;
+    background-color:orange;
+    font-weight:600;
+    display:inline;
+    border:solid 1px black;
+    cursor:pointer;
+    margin:0;
+
+}
+.message{
+    margin-top:20px;
+    margin-left:27px;
+    padding:4px;
+    border-radius:4px;
+    border:1px solid black;
+    background: whitesmoke;
+    outline:none;
+    min-height:20px;
+    max-height:50px;
+    overflow:auto;
+    scrollbar-width: none;
+    width:80%;
+    
+}
+.hide_input{
+    display:none;
+}
+.submit{
+    position:absolute;
+    width:10%;
+    padding:4px;
+    cursor: pointer;
+    border:none;
+    outline:none;
+    border-radius: 4px;
+    background-color:orange;
+    right:10px;
+    bottom:30px;
+}
+.hide_submit{
+    display:none;
+}
+#newchat{
+    cursor: pointer;
+    position:absolute;
+    display: none;
+    padding:6px;
+    border:none;
+    outline:none;
+    background-color:orange;
+    right:20px;
+    bottom:20px;
+}
+.parent{
+    position:relative;
+    margin-top:15px;
+    min-height:30px;
+    max-height:100px;
+}
+.mine_middle,.others_middle{
+    box-shadow:3px 5px darkgray;
+    font-size:0.7rem;
+    position: absolute;
+    height:70%;
+    left:50%;
+    top:50%;
+    padding:5px 6px 0px 6px;
+    transform: translate(-50%,-50%);
+    color:black;
+    margin:0px auto;
+    vertical-align: middle;
+    background-color:lightseagreen;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+.mine_sideways{
+    font-size:0.9rem;
+    position: relative;
+    display:table;
+    max-width:50%;
+    margin-right:10px;
+    margin-left:auto;
+    max-height:100px;
+    letter-spacing:1px;
+    color:white;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    overflow-x:auto;
+    overflow-y: scroll;
+    scrollbar-width:none;
+    vertical-align: middle;
+    padding:6px 7px 4px 6px;
+    background-color:rgb(17, 47, 216);
+    border-radius:6px;
+}
+.others_sideways{
+    font-size:0.9em;
+    position: relative;
+    display:table;
+    max-width:50%;
+    margin-left:10px;
+    max-height:100px;
+    letter-spacing:1px;
+    color:black;
+    overflow-x:auto;
+    overflow-y: scroll;
+    scrollbar-width:none;
+    vertical-align: middle;
+    padding:6px 4px 4px 8px;
+    background-color:lightgreen;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    font-family:verdana;
+}
+.others_sideways h7{
+    font-size:0.7rem;
+    font-family:verdana;
+    margin:2px;
+    padding-right:4px;
+}
+.others_sideways:after{
+        content:'';
+        width:10px;
+        height:10px;
+        position:absolute;
+        top:0%;
+        left:0%;
+        transform:rotate(54deg);
+        margin-left:-5px;
+        margin-top:1.5px;
+        border:1px solid lightgreen;
+        background-color:lightgreen;
+}
+.mine_sideways:after{
+        content:'';
+        width:10px;
+        height:10px;
+        position:absolute;
+        top:0%;
+        right:0%;
+        margin-right:-4px;
+        transform:rotate(45deg);
+        margin-top:1.57px;
+        border:1px solid rgb(17, 47, 216);
+        background-color:rgb(17, 47, 216);
+}
+@media only screen and (max-width:600px){
+    #container{
+        width:90%;
+    }
+    div[contenteditable]{
+        width:76%;
+    }
+    #submit{
+        width:50px;
+    }
+
+}
+@media only screen and (min-width:600px) and (max-width:1100px){
+    #container{
+        width:60%;
+    }
+}

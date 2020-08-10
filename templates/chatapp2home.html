@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'styles/chatapp.css' %}">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>chatapp2</title>
+</head>
+<body>
+<div id="header">
+	<span style="color:darkblue;">Q</span>uickChat<span style="color:purple;">zz</span>
+	</div>
+<div id="content">
+<form action="room" method="POST">
+{% csrf_token %}
+<h3>Chat With random strangers</h3>
+<p>
+Welcome to the Quickchatzz free Chat Roulette.You Must be 13+ to start a random chat with stranger.<br>
+How to chat with strangers safely?<br>
+Don't share your personal information or contacts,don't send any money to strangers.<br>
+Enjoy the Quickchatzz!<br>
+Refresh the Page to connect to a new Stranger.<br>
+click here to start  your anonymous Random Chat.</p>
+<input type="text" name="username" id="person_name"  value="stranger" placeholder="enter your name">
+<input type="submit" id="startchat" value="Start">
+</form>
+<script>
+document.querySelector('#startchat').onclick=function(e){
+ var person_name=document.getElementById('person_name').value;
+ if(person_name==""){
+	 return false;
+ }
+
+}
+</script>
+</body>
+</html>

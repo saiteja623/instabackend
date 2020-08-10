@@ -1,0 +1,160 @@
+{% extends 'instalikeshome.html' %}
+{% block  style%}
+{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/instalikes.css' %}">
+{% endblock %}
+{% block content %}
+<div id="total">
+<div id="container">
+<div id="loader2"> <div id="inside-loader"></div></div>
+<div id="reveal">
+{% for i in posts%}
+<div class="images">
+<div class="image-user">
+	<div class="posted-users-image">
+		<img src="{{i.user.userprofile.image.url}}" width="40" height="40">	
+	</div>
+	<div class="posted-users-name">
+		{{i.user.username}}
+	</div>
+</div>
+<img class="posted-image" src="{{i.image.url}}" onload="image_loaded({{i.id}},this)" ondblclick="likeByImage({{i.id}},this)" class="image">
+<div class="heart">
+<i onclick="menu({{i.id}},this)" class="far fa-heart"></i>
+<i onclick="getcomments({{i.id}},this)" class="far fa-comment"></i>
+</div>
+<p>Liked by  <a href="javascript:getLikes({{i.id}})"> {{i.likes}} others </a></p>
+{% if i.figcaption %}
+<!---post-caption -->
+<div class="post-caption">
+<span style="font-weight:bold;cursor:pointer;"><a href="{% url 'homePage' %}/{{i.user}}">{{i.user.username}}</a></span>
+<span style="font-size:0.98rem;">{{i.figcaption}}</span>
+</div>
+{% endif %}
+<!-- commments -->
+{% if i.commentsby_set.all.count > 0 %}
+<div class="comments-display">
+	{% if i.commentsby_set.all.count  > 2 %}
+			<span style="font-weight:bold;font-family:open-sans;"><a href="{% url 'homePage' %}/{{i.user}}">{{i.user}}</a></span> {{i.commentsby_set.all.first.comment}}<br>	
+		<span style="opacity:0.6;font-size:0.9rem;"><a href="javascript:getcomments({{i.id}},this)">view all {{i.commentsby_set.all.count}} comments</a></span>
+	{%else %}
+		{% for k in i.commentsby_set.all %}
+		{{ loop.index }}
+			<span style="font-weight:bold;font-family:open-sans;"><a href="{% url 'homePage' %}/{{i.user}}">{{k.name}}</a></span> {{k.comment}}<br>
+		{% endfor %}
+	{% endif %}
+</div>
+{% else %}
+<div></div>
+{% endif %}
+
+
+<!--date created -->
+
+<div class="date-created">
+</div>
+<!-- comment input -->
+<div id="comment-box">
+<input type="text" onkeyup="checkComment(this)" id="comment-input" placeholder="Add a comment...">
+<input type="submit" onclick="submitComment({{i.id}},this)" disabled="disabled" id="comment-btn" value="Post" />
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+<!--userprofile and suggestions -->
+
+
+<div id="profile-otherusers">
+<div id="user-profile">
+	<div id="user-profile-image">
+	<img src="{{user.userprofile.image.url}}">
+	</div>
+	<div id="usersinfo">
+		<span style="font-weight:bold;" ><a href="{% url 'homePage' %}/{{user.username}}">{{user.username}}</a></span><br>
+		{{user.userprofile.name}}
+	</div>
+</div>	
+
+<!---otherusers -->
+<div id="otherusers">
+<div id="otherusers-loader">
+	<div id="heading-loader">
+	</div>
+	<div id="users-loader">
+		{% for i in 'saitejaballa' %}
+		<div class="users-info-loader"></div>
+		{% endfor %}
+	</div>
+</div>
+<div id="otherusers-reveal">
+	<div class="heading">Suggestions</div>
+	<div id="inf">
+	{% for i in allusers %}
+	<div class="sugges_profile">
+	<img src="{{i.user.userprofile.image.url}}" onload="checkforFriend({{i.id}},this)">
+	<div class="innerdiv">
+	<div id="username" ><a href="{% url 'homepage_user' i.user %}">{{i.user}}</a> </div>
+	<div>
+	<input type="submit" onclick="sendreq({{i.id}},this)">
+	</div>	
+	</div>
+	</div>
+	{% endfor %}
+	</div>
+	</div>
+</div>
+</div>
+</div>
+<!--likes popup box also popup box for comments -->
+<div id="likedby">
+	<div id="content">
+		<div id="heading">
+			<p>Likes</p>
+			<div id="close"> 
+				+
+			</div>
+		</div>
+		<div id="likes">
+		</div>	
+	</div>
+</div>
+
+<!-- alert for unfreind -->
+<div id="unfriend-alert">
+	<div id="inf">
+		<div id="alert-heading">
+		</div>	
+		<input type="submit" value="unfriend"  id="unfriend-user-btn">
+		<input type="submit" value="cancel"   id="cancel-unfriend-btn">	
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+//when user hits the comment button
+var name="{{user.username}}";
+function submitComment(id,self) {
+	var m=self.parentNode.parentNode.childNodes[15];
+  var comment = self.parentNode.childNodes[1].value;
+  self.parentNode.childNodes[1].value = "";
+  var ob = new XMLHttpRequest();
+  var params = 'id=' + id + "&action=save&comment=" + comment;
+  ob.open("POST", "get_save_comment", true);
+  ob.onreadystatechange = function () {
+    if (ob.readyState == 4 && ob.status == 200) {
+var m=self.parentNode.parentNode.childNodes[15];
+  var url = "homePage/" + name;
+  m.innerHTML += '<span style="font-weight:bold;">' + '<a href=' + url + '>' + name + ' </a > ' + '</span > ' + "  " + comment+ '<br>'+'<br>';
+
+    }
+  }
+  ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ob.setRequestHeader("X-CSRFToken", csrfcookie());
+  ob.send(params);
+}
+</script>
+<script src="{% static 'js/instalikes.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="{% static 'styles/chatapp.css' %}">
+	<title>chatapp</title>
+</head>
+<body bgcolor="cyan">
+<div id="content">
+<form action="room" method="POST">
+{% csrf_token %}
+Enter room name:<br>
+<input type="text" name="roomname" id="room_name" placeholder="room name"><br>
+Enter your name<br>
+<input type="text" name="username" id="person_name" placeholder="person_name"><br>
+<br>
+<input type="submit" value="Enter room"  id="enter">
+</form>
+</div>
+<script>
+document.querySelector('#enter').onclick=function(e){
+ var person_name=document.getElementById('person_name').value;
+ var room_name=document.getElementById('room_name').value;
+ if(person_name=="" || room_name==""){
+	 return false;
+ }
+}
+</script>
+</body>
+</html>

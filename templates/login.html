@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+	<script src="{% static 'js/login.js' %}"></script>
+</head>
+<body onload="load()" style="background-image:url({% static 'images/sun.jpg'%})">
+<div id="loading2">
+       <div id="airplane">
+        <img src="{% static 'images/airplane.png' %}" width="150" height="150">
+</div>
+        <img src="{% static 'images/cloud.png'%}"  id="cloud1"width="100">
+        <img src="{% static 'images/cloud.png' %}" id="cloud2" width="100">
+</div>
+<div id="total">
+<div class="heading">
+        PLEASE LOGIN INORDER TO VISIT
+</div>
+<div class="container">
+{% for i in messages %}
+	<div class="messages">{{i}}</div>
+	{% endfor %}
+<div class="login">LOGIN</div>
+<form action="login" method="post">
+	{% csrf_token %}
+	<div class="form">
+		<div class="inf">
+		<input type="text" name="username" id="valid1" required>
+		<label for="name">Name</label>
+		</div>
+		<div class="inf">
+		<input type="password" id="valid2" name="password" required>
+		<label for="password">Password</label>
+		<i id="icon" class="far fa-eye" onclick="hide(this)"></i>
+		</div>
+	</div>
+    <button onClick="return check()" class="sub">LOGIN</button>
+</form>
+<a class="resetpass-btn" href="#password">Reset Password?</a></button>
+<div class="noaccount">
+Didn't have an account?<a href="register">signup</a></span>
+</div>
+</div>
+<div id="password">
+<div class="container2">
+<a href="#" class="close">&times;</a><br>
+<div class="login" style="color:white;">We will sent a OTP to your GMAIL account</div>
+		<form action="send_otp" method="post">
+		{% csrf_token %}
+		<div class="form">
+		<div class="inf">
+		<input type="email" name="gmail" required>
+		<label for="email">EMAIL</label> 
+		</div>
+		<button class="sub">SUBMIT</button>
+		</form>
+		</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

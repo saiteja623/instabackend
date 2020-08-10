@@ -1,0 +1,640 @@
+{% extends 'instalikeshome.html' %}
+{% block style %}
+<style>
+body{
+    text-align:center;
+    overflow-x:hidden;
+}
+#container{
+    display:inline-block;
+    margin-top:60px;
+    border:solid 1px black;
+    padding:10px;
+    max-width:550px;
+    min-width:400px;
+    max-height:400px;
+    border:1px solid rgb(0,0,0,0.4);
+    box-shadow:2px 3px 3px lightgray;
+    text-align:initial;
+}
+#image{
+    display:inline-block;
+    height:150px;
+}
+#image img{
+    border-radius:50%;
+    width:130px;
+    height:130px;
+}
+#usersinfo{
+    display:inline-block;
+    margin-left:40px;
+    width:300px;
+    height:120px;
+    padding:10px;
+}
+#friends-btn{
+    margin-left:10px;
+    color:black;
+    background:white;
+    padding:2px 6px;
+    border:solid 1px rgb(0,0,0,0.4);
+    cursor:pointer;
+    font-size:1.1rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#follow-btn{
+    margin-left:10px;
+    color:white;
+    background-color:rgb(25, 78, 224);
+    padding:4px 6px;
+    border-radius:2px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:1rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#requested-btn{
+    margin-left:10px;
+    color:white;
+    background:green;
+    padding:4px 6px;
+    border-radius:2px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:1.1rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.accept-btn{
+    margin-left:30px;
+    color:white;
+    background:darkblue;
+    padding:6px;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:1.1rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.decline-btn{
+    margin-left:10px;
+    color:white;
+    background:red;
+    padding:6px;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-size:1.1rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#username{
+    display:inline-block;
+    font-size:2rem;
+    font-weight:100;
+    margin-left:0px;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#status{
+    display:inline-block;
+    margin-top:10px;
+}
+#user-and-post{
+    display:inline-flex;
+}
+#numofusers{
+    margin-top:20px;
+    display:inline-block;
+background:white;
+padding:10px;
+font-family:sans-serif;
+vertical-align:middle;
+cursor:pointer;
+}
+#numofposts{
+    display:inline-block;
+    margin-top:15px;
+    font-size:1.2rem;
+    margin-left:30px;
+    padding-top:10px;
+}
+#randomusername{
+    margin-left:10px;
+    font-size:1.3rem;
+    font-weight:500;
+}
+#desc{
+    float:left;
+    width:90%;
+    height:140px;
+    margin:4px;
+    padding:0 10px;
+    line-height:23px;
+    font-size:1.2rem;
+    text-transform:capitalize;
+    overflow:hidden;
+}
+
+#image-user{
+    display:inline-flex;
+}
+#unfriend-alert{
+    width:100%;
+    height:100%;
+    position:absolute;
+    background-color:rgba(0,0,0,0.7);
+    align-items:center;
+    display:none;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align:center;
+}
+#unfriend-alert #inf{
+    width:400px;
+    height:120px;
+    opacity:1;
+    transform:scale(2);
+    margin:200px auto;
+    background-color:white;
+    text-align:middle;
+    vertical-align: middle;
+    align-items:center;
+    justify-content: center;
+    position: relative;
+    border-radius:6px;
+    animation:alert 0.07s linear;
+    animation-fill-mode: forwards;
+}
+#alert-heading{
+    width:100%;
+    height:55%;
+    text-align:middle;
+    position: relative;
+    border-bottom:solid 1px rgb(0,0,0,0.4);
+    line-height:60px;
+    font-size:1.3rem;
+
+}
+#unfriend-user-btn{
+width:50%;
+margin:4px 0;
+padding:4px 6px;
+font-size:1.2rem;
+border:none;
+outline:none;
+background:white;
+color:red;
+border-right:1px solid rgb(0,0,0,0.5);
+cursor:pointer;
+}
+#cancel-unfriend-btn{
+margin:0;
+cursor:pointer;
+padding:4px 6px;
+font-size:1.2rem;
+border:none;
+outline:none;
+background:white;
+width:48%;
+color:black;
+}
+@keyframes alert{
+    to{
+        transform:scale(1);
+    }
+}
+
+#randomuser-friends{
+    width:100%;
+    height:100%;
+    position:fixed;
+    background-color:rgba(0,0,0,0.7);
+    align-items:center;
+    display:none;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    text-align:initial;
+}
+#randomuser-friends #content{
+    width:35%;
+    max-height:300px;
+    opacity:1;
+    margin:200px auto;
+    background-color:white;
+    position: relative;
+    transform:scale(2);
+    animation:alert 0.1s linear;
+    animation-fill-mode: forwards;
+    border-radius: 6px;
+}
+#randomuser-friends #content #randomfriends-list{
+    max-height:240px;
+    padding-bottom:10px;
+    overflow-y:scroll;
+    scrollbar-width:none;
+}
+#randomuser-friends #content #heading{
+    display: inline-flex;
+    position:relative;
+    width:97%;
+    height:30px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    border-bottom:1px solid black;
+    text-align:center;
+    padding:14px 4px 0px 4px;
+    align-items:center;
+    justify-content:center;
+}
+#randomuser-friends #content #heading p{
+    margin-top:2px;
+    text-align:center;
+    font-size:1.3rem;
+}
+#randomuser-friends #content #heading #close{
+    transform:rotate(45deg);
+    position:absolute;
+    bottom:0.4px;
+    right:1px;
+    cursor: pointer;
+    padding:4px;
+    opacity:1;
+    font-size:2.3rem;
+    color:black;
+}
+
+.parentclass{
+    display:inline-flex;
+width:90%;
+height:40px;
+margin:4px;
+vertical-align:middle;
+padding:4px 10px;
+font-family:sans-serif;
+text-transform:lowercase;
+border-bottom:solid 1px rgb(0,0,0,0.4);
+}
+.randomsearchimages{
+    display:inline-block;
+    border-radius:50%;
+    margin-left:10px;
+}
+.randomsearch-username{
+    display:block;
+    vertical-align:middle;
+    margin-left:10px;
+    cursor:pointer;
+    height:30%;
+}
+.randomsearchuser-name{
+    display:block;
+    opacity:0.8;
+    font-size:0.9rem;
+    margin-top:10px;
+    margin-left:10px;
+    font-family:lucid-sans;
+}
+.randomusernames{
+    display:inline-block;
+    width:130px;
+}
+#random-user-posts{
+    display:inline-flex;
+    max-width:1050px;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: stretch;
+    border-top:1px solid rgb(0,0,0,0.4);
+    margin-top:30px;
+
+}
+#random-user-posts .user-posted-images {
+  margin: 0.9%;
+  width: 30%;
+  height: 300px;
+  cursor: pointer;
+  border-radius: 0;
+  position: relative;
+}
+#random-user-posts img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+.user-posted-images .likes-hover {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.4;
+  font-size: 3rem;
+  color: white;
+  vertical-align: middle;
+  line-height: 100%;
+  animation: up 0.3s linear;
+  animation-fill-mode: forwards;
+}
+@keyframes up {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+.user-posted-images:hover .likes-hover {
+  display: block;
+}
+.show-likes {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 30px;
+  background: transparent;
+  padding: 4px 8px;
+  font-size: 1.3rem;
+  color: white;
+  opacity: 0;
+  animation: visible 0.3s linear;
+  animation-fill-mode: forwards;
+}
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.user-posted-images:hover .show-likes {
+  display: block;
+}
+.show-likes .fa-comment {
+  transform: scaleX(-1);
+}
+
+#must-be-friend{
+    position:relative;
+    padding:10px 4px 0px 4px;
+    max-width:600px;
+    height:40px;
+    font-family:sans-serif;
+    margin:10px auto;
+    vertical-align:middle;
+    font-size:1.2rem;
+    border-bottom:solid 1px rgb(0,0,0,0.34);
+}
+
+</style>
+{% endblock %}
+{% block content %}
+
+<div id="container">
+<div id="image-user">
+<div id="image">
+    <img src="{{user2.userprofile.image.url}}">
+</div>
+<div id="usersinfo">
+<div id="sub">
+    <div id="username">{{user2.username}}</div>
+    <div id="status">
+    {% if friend in "yes" %}
+    <input type="submit" id="friends-btn" onclick="action({{user2.customuser.id}},this)" value="Friends">
+    {% elif friend in  "no" %}
+    <input type="submit" id="follow-btn" onclick="action({{user2.customuser.id}},this)" value="Add friend">
+    {% elif friend in "requested"%}
+    <input type="submit" id="requested-btn" onclick="action({{user2.customuser.id}},this)" value="Requested">
+    {% else%}
+   <input type="submit" class="accept-btn" onclick="accept_user({{frequestid}},this)" value="accept">
+    <input type="submit" class="decline-btn" onclick="decline_user({{frequestid}},this)" value="decline">
+    {% endif %}
+    </div>
+    </div>
+    <div id="user-and-post">
+    <div id="numofusers">
+        <span style="font-weight:bold;">{{num_of_friends}}</span> Friends
+    </div>
+    <div id="numofposts">
+        <span style="font-weight:bold;">{{num_of_posts}}</span> Posts
+        </div>
+    </div>
+</div>
+</div>
+<div id="randomusername">
+{{user2.userprofile.name}}
+</div>
+<div id="desc">{{user2.userprofile.desc|linebreaks}}</div>
+</div>
+<div id="unfriend-alert">
+	<div id="inf">
+		<div id="alert-heading">
+		</div>	
+		<input type="submit" value="unfriend"  id="unfriend-user-btn">
+		<input type="submit" value="cancel"   id="cancel-unfriend-btn">	
+	</div>
+</div>
+<div id="randomuser-friends">
+	<div id="content">
+		<div id="heading">
+			<p>Friends</p>
+			<div id="close"> 
+				+
+			</div>
+		</div>
+		<div id="randomfriends-list">
+		</div>	
+	</div>
+</div>
+{% if friend in "yes" %}
+<div id='random-user-posts'>
+{% for i in posts%}
+<div class="user-posted-images">
+<img  src="{{i.image.url}}">
+    <div class="likes-hover">
+    </div>
+     <div class="show-likes">
+     <i class="fa fa-heart"></i> {{i.likes}}        <i class="fas fa-comment"></i> {{i.commentsby_set.all.count}}
+      </div>
+</div>
+{% endfor %}
+</div>
+{% elif friend in "no" or friend in "requested" or friend in "recieved"%}
+<div id="must-be-friend">
+You must be friend of <span style="font-weight:bold;text-transform:capitalize;">{{user2.username}}</span>  to see their posts
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+var csrfcookie = function () {
+  var cookieValue = null,
+    name = "csrftoken";
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) == name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+var object;
+var id_object;
+function action(id,self){
+    if (self.value=="Friends"){
+        object=self;
+        id_object=id;
+         var username=self.parentNode.parentNode.childNodes[1].textContent
+   var x = document.getElementById("alert-heading");
+    x.textContent = "Unfriend  " + username + "?";
+    document.getElementById("unfriend-alert").style.display = "flex";
+    }
+    else if(self=="confirm-unfriend"){
+        document.getElementById("unfriend-alert").style.display = "none";
+    object.value="Add friend";
+    object.style.background="blue";
+    object.style.color="white";
+    var ob= new XMLHttpRequest();
+    var para = "id=" + id_object;
+    ob.open("POST", "/remove_friend", true);
+    ob.onreadystatechange = function () {
+      if (ob.readyState == 4 && ob.status==200) {
+          
+      }
+    };
+    ob.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ob.setRequestHeader("X-CSRFToken", csrfcookie());
+    ob.send(para);
+
+}
+else if(self.value=="Add friend")
+{
+    self.value="requested";
+    self.style.background="green";
+    self.style.color="white";
+    var obj = new XMLHttpRequest();
+    var para = "y=" + id;
+    obj.open("POST", "/send_request", true)
+    obj.onreadystatechange = function () {
+      if (obj.readyState == 4 && obj.state == 4) {
+
+      }
+    }
+    obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    obj.setRequestHeader("X-CSRFToken", csrfcookie());
+    obj.send(para);
+}
+else if(self.value=="requested"){
+    self.value = "Add friend";
+    self.style.background = "blue";
+    self.style.color = "white";
+    var obj = new XMLHttpRequest();
+    var para = "y=" + id;
+    obj.open("POST", "/unsend_request", true)
+    obj.onreadystatechange = function () {
+      if (obj.readyState == 4 && obj.state == 4) {
+
+      }
+    }
+    obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    obj.setRequestHeader("X-CSRFToken", csrfcookie());
+    obj.send(para);
+}
+}
+document.getElementById("unfriend-user-btn").addEventListener("click", function () {
+  action(4, "confirm-unfriend");
+});
+
+
+document.getElementById("cancel-unfriend-btn").addEventListener('click', function (e) {
+  document.getElementById("unfriend-alert").style.display = "none";
+});
+
+function accept_user(id,self){
+    document.querySelector(".decline-btn").style.display="none";
+    self.value="friends";
+    self.style.background="blue";
+    self.style.color="white";
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/accept_request", true);
+    var params = 'id=' + id;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log("done")
+        }
+    }
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("X-CSRFToken", csrfcookie());
+    xhr.send(params);
+}
+function decline_user(id,self){
+        document.querySelector(".accept-btn").style.display="none";
+        self.value="Add friend";
+        self.style.background="blue";
+        self.style.color="white";
+        var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/decline_request", true);
+    var params = 'id=' + id;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log("done")
+        }
+    }
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("X-CSRFToken", csrfcookie());
+    xhr.send(params);
+}
+document.getElementById("numofusers").onclick=function(){
+    var numoffriends="{{num_of_friends}}";
+    if (numoffriends>0){
+    var res=document.getElementById("randomfriends-list");
+    res.innerHTML="";
+    document.getElementById("randomuser-friends").style.display="flex";
+    {% for i in user2.customuser.friends.all%}
+            var parent=document.createElement("div");
+              var randomuserimage=document.createElement("IMG");
+              randomuserimage.setAttribute("src","{{i.user.userprofile.image.url}}");
+              randomuserimage.setAttribute("class","randomsearchimages");
+              randomuserimage.setAttribute("width",40);
+              randomuserimage.setAttribute("height",40);
+              parent.setAttribute("class","parentclass");
+              var randomusername=document.createElement("div");
+              randomusername.setAttribute("class","randomsearch-username");
+              randomusername.setAttribute("onclick","some(this)");
+              randomusername.textContent="{{i.user}}";
+              document.getElementById("randomfriends-list").appendChild(parent);
+              var name=document.createElement("div");
+              name.innerText="{{i.user.userprofile.name}}";
+              name.setAttribute("class","randomsearchuser-name");
+              parent.appendChild(randomuserimage);
+              var randomuserdiv=document.createElement("div");
+              randomuserdiv.setAttribute("class","randomusernames");
+              parent.appendChild(randomuserdiv);
+              randomuserdiv.appendChild(randomusername);
+              randomuserdiv.appendChild(name);
+    {% endfor %}
+}
+};
+document.getElementById("close").onclick=function(){
+    document.getElementById("randomuser-friends").style.display="none";
+}
+
+</script>
+{% endblock %}

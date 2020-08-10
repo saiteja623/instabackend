@@ -1,0 +1,142 @@
+body{
+    overflow-y:scroll;
+}
+#container{
+    display:inline-block;
+    border-right:1px solid black;
+    margin-left:480px;
+    width:300px;
+    height:100%;
+    padding:10px;
+    align-items:center;
+    justify-content: center;
+    outline:none;
+    box-shadow:5px 8px gray;
+}
+#container .images{
+    border:6px soild black;
+    margin:20px;
+    align-items:center;
+    text-align:center;
+    justify-content: center;
+    width:100%;
+    height:200px;
+    padding:10px 3px;
+    position:relative;
+}
+.image{
+    cursor:pointer;
+}
+.fa-heart{
+    position:absolute;
+    color:red;
+    cursor:pointer;
+    left:10px;
+}
+.images p{
+    position:absolute;
+    bottom:2px;
+    left:10px;
+}
+#likedby{
+    width:100%;
+    height:100%;
+    position:absolute;
+    background-color:rgba(0,0,0,0.7);
+    align-items:center;
+    display:none;
+    top:0;
+    left:0;
+}
+#likedby #content{
+    width:30%;
+    height:40%;
+    opacity:1;
+    margin:200px auto;
+    background-color:white;
+    position: relative;
+}
+.images p a{
+    text-decoration:none;
+    color:black;
+    font-weight: bold;
+}
+#likedby #content #heading{
+    position:relative;
+    width:97%;
+    height:30px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    border-bottom:1px solid black;
+    text-align:center;
+    padding:4px;
+    padding-bottom:6px;
+    vertical-align: center;
+}
+#likedby #content #heading p{
+    margin-top:2px;
+    text-align:center;
+    font-size:1.3rem;
+}
+#likedby #content #heading #close{
+    transform:rotate(45deg);
+    position:absolute;
+    bottom:0.4px;
+    right:1px;
+    cursor: pointer;
+    padding:4px;
+    opacity:1;
+    font-size:2.3rem;
+    color:black;
+}
+#likedby #content #likes{
+    position: relative;
+    width:97%;
+    margin:2px auto;
+    overflow-y: scroll;
+}
+#likedby #content #likes h3{
+    margin-left:7px;
+    margin:8px;
+    text-transform:capitalize;
+    font-weight: normal;
+}
+
+/* other users */
+#otherusers{
+    display: inline-block;
+    width:300px;
+    height:530px;
+    margin-left:100px;
+    margin-top:30px;
+    overflow-y:scroll;
+    scrollbar-width: none;
+    background:lightgray;
+    text-align:center;
+    padding-bottom:6px;
+}
+.sugges_profile{
+    padding:8px;
+    height:50px;
+    width:100%;
+    margin:6px;
+}
+.sugges_profile img{
+    vertical-align: middle;
+    border-radius:50%;
+}
+.sugges_profile .innerdiv{
+    margin-left:4px;    
+    display:inline-block;
+    margin-top:2px;
+    font-family:sans-serif; 
+    font-weight:500;
+}
+.sugges_profile .innerdiv input{
+background:blue;
+color:white;
+padding:4px;
+font-weight:300;
+letter-spacing: 1px;
+cursor:pointer;
+border-radius:6px;
+}
